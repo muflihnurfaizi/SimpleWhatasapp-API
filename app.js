@@ -210,38 +210,38 @@ app.post('/send-message', [
 });
 
 // Send media
-app.post('/send-media', async (req, res) => {
-  const number = phoneNumberFormatter(req.body.number);
-  const caption = req.body.caption;
-  const fileUrl = req.body.file;
+// app.post('/send-media', async (req, res) => {
+//   const number = phoneNumberFormatter(req.body.number);
+//   const caption = req.body.caption;
+//   const fileUrl = req.body.file;
 
-  // const media = MessageMedia.fromFilePath('./image-example.png');
-  // const file = req.files.file;
-  // const media = new MessageMedia(file.mimetype, file.data.toString('base64'), file.name);
-  let mimetype;
-  const attachment = await axios.get(fileUrl, {
-    responseType: 'arraybuffer'
-  }).then(response => {
-    mimetype = response.headers['content-type'];
-    return response.data.toString('base64');
-  });
+//   // const media = MessageMedia.fromFilePath('./image-example.png');
+//   // const file = req.files.file;
+//   // const media = new MessageMedia(file.mimetype, file.data.toString('base64'), file.name);
+//   let mimetype;
+//   const attachment = await axios.get(fileUrl, {
+//     responseType: 'arraybuffer'
+//   }).then(response => {
+//     mimetype = response.headers['content-type'];
+//     return response.data.toString('base64');
+//   });
 
-  const media = new MessageMedia(mimetype, attachment, 'Media');
+//   const media = new MessageMedia(mimetype, attachment, 'Media');
 
-  client.sendMessage(number, media, {
-    caption: caption
-  }).then(response => {
-    res.status(200).json({
-      status: true,
-      response: response
-    });
-  }).catch(err => {
-    res.status(500).json({
-      status: false,
-      response: err
-    });
-  });
-});
+//   client.sendMessage(number, media, {
+//     caption: caption
+//   }).then(response => {
+//     res.status(200).json({
+//       status: true,
+//       response: response
+//     });
+//   }).catch(err => {
+//     res.status(500).json({
+//       status: false,
+//       response: err
+//     });
+//   });
+// });
 
 const findGroupByName = async function(name) {
   const group = await client.getChats().then(chats => {
@@ -306,47 +306,47 @@ app.post('/send-group-message', [
 });
 
 // Clearing message on spesific chat
-app.post('/clear-message', [
-  body('number').notEmpty(),
-], async (req, res) => {
-  const errors = validationResult(req).formatWith(({
-    msg
-  }) => {
-    return msg;
-  });
+// app.post('/clear-message', [
+//   body('number').notEmpty(),
+// ], async (req, res) => {
+//   const errors = validationResult(req).formatWith(({
+//     msg
+//   }) => {
+//     return msg;
+//   });
 
-  if (!errors.isEmpty()) {
-    return res.status(422).json({
-      status: false,
-      message: errors.mapped()
-    });
-  }
+//   if (!errors.isEmpty()) {
+//     return res.status(422).json({
+//       status: false,
+//       message: errors.mapped()
+//     });
+//   }
 
-  const number = phoneNumberFormatter(req.body.number);
+//   const number = phoneNumberFormatter(req.body.number);
 
-  const isRegisteredNumber = await checkRegisteredNumber(number);
+//   const isRegisteredNumber = await checkRegisteredNumber(number);
 
-  if (!isRegisteredNumber) {
-    return res.status(422).json({
-      status: false,
-      message: 'The number is not registered'
-    });
-  }
+//   if (!isRegisteredNumber) {
+//     return res.status(422).json({
+//       status: false,
+//       message: 'The number is not registered'
+//     });
+//   }
 
-  const chat = await client.getChatById(number);
+//   const chat = await client.getChatById(number);
   
-  chat.clearMessages().then(status => {
-    res.status(200).json({
-      status: true,
-      response: status
-    });
-  }).catch(err => {
-    res.status(500).json({
-      status: false,
-      response: err
-    });
-  })
-});
+//   chat.clearMessages().then(status => {
+//     res.status(200).json({
+//       status: true,
+//       response: status
+//     });
+//   }).catch(err => {
+//     res.status(500).json({
+//       status: false,
+//       response: err
+//     });
+//   })
+// });
 
 server.listen(port, function() {
   console.log('App running on *: ' + port);
