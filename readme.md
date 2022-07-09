@@ -1,7 +1,8 @@
 # Whatsapp API Tutorial
 
-Hi, this is the implementation example of <a href="https://github.com/pedroslopez/whatsapp-web.js">whatsapp-web.js
-and a modification from <a href="https://github.com/ngekoding/whatsapp-api-tutorial"> </a>
+Hi, this is the implementation example of <a href="https://github.com/pedroslopez/whatsapp-web.js">whatsapp-web.js</a>
+
+and a modification from <a href="https://github.com/ngekoding/whatsapp-api-tutorial"> ngekoding </a>
 
 ### How to use?
 
